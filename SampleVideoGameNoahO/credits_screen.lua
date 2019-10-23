@@ -6,7 +6,7 @@
 -- Date: Month Day, Year
 -- Description: This is the credits page, displaying a back button to the main menu.
 -----------------------------------------------------------------------------------------
-
+display.setStatusBar(display.HiddenStatusBar)
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
