@@ -46,7 +46,7 @@ local music = audio.loadStream("Sounds/bensound-hipjazz.mp3")
 
 -- Creating Transition Function to Credits Page
 local function InstructionsTransition( )       
-    composer.gotoScene( "instructions", {effect = "flipFadeOutIn", time = 500})
+    composer.gotoScene( "instructions", {effect = "zoomOutIn", time = 500})
      audio.stop()
 end 
 
@@ -54,7 +54,7 @@ end
 
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition( )
-    composer.gotoScene( "level1_screen", {effect = "zoomInOutFade", time = 1000})
+    composer.gotoScene( "level1_screen", {effect = "zoomOutInRotate", time = 1000})
     audio.stop()
 end    
 
@@ -62,7 +62,7 @@ end
 
 -- Creating Transition Function to Instructions Page
 local function CreditsTransition( )       
-    composer.gotoScene( "credits_screen", {effect = "flipFadeOutIn", time = 500})
+    composer.gotoScene( "credits_screen", {effect = "slideUp", time = 500})
     audio.stop()
 end 
 -----------------------------------------------------------------------------------------
