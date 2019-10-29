@@ -1,9 +1,9 @@
 -----------------------------------------------------------------------------------------
 -- you_win.lua
 -- Created by: Gil Robern
--- Modified by: Your Name
--- Date: Month Day, Year
--- Description: This shows the player that they lost the game and plays a booing sound.
+-- Modified by: Noah Ouellette
+-- Date: october 28, 2019
+-- Description: This shows the player that they won the game and plays a win sound
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -14,6 +14,10 @@
 local composer = require( "composer" )
 
 local widget = require( "widget" )
+
+local youWinSound = audio.loadSound("Sounds/youWinSound.wav")
+
+local channel1
 
 -----------------------------------------------------------------------------------------
 
@@ -83,6 +87,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        channel1 = audio.play(youWinSound)
     end
 
 end

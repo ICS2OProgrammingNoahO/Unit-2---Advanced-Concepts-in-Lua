@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------------------
 -- you_lose.lua
 -- Created by: Gil Robern
--- Modified by: Your Name
--- Date: Month Day, Year
+-- Modified by: Noah Ouellette
+-- Date: October 28, 2019
 -- Description: This shows the player that they lost the game and plays a booing sound.
 -----------------------------------------------------------------------------------------
 
@@ -14,6 +14,10 @@
 local composer = require( "composer" )
 
 local widget = require( "widget" )
+
+local channel1
+
+local youLoseSound = audio.loadSound("Sounds/Kids Booing.mp3")
 
 -----------------------------------------------------------------------------------------
 
@@ -83,6 +87,7 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        channel1 = audio.play(youLoseSound)
     end
 
 end
