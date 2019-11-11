@@ -49,13 +49,14 @@ local spikes3platform
 
 local torchesAndSign
 local door
-local door
 local character
 
 local heart1
 local heart2
-local numLives = 2
+local heart3
+local numLives = 3
 
+local lArrow 
 local rArrow 
 local uArrow
 
@@ -65,11 +66,13 @@ local LINEAR_VELOCITY = -100
 local GRAVITY = 7
 
 local leftW 
+local rightW
 local topW
 local floor
 
 local ball1
 local ball2
+local ball3
 local theBall
 
 local questionsAnswered = 0
@@ -78,6 +81,13 @@ local questionsAnswered = 0
 -- LOCAL SCENE FUNCTIONS
 ----------------------------------------------------------------------------------------- 
  
+
+ -- When left arrow is touched, move character left
+local function left (touch)
+    motionx = -SPEED
+    character.xScale = -1
+end
+
 -- When right arrow is touched, move character right
 local function right (touch)
     motionx = SPEED
@@ -107,11 +117,13 @@ end
 local function AddArrowEventListeners()
     rArrow:addEventListener("touch", right)
     uArrow:addEventListener("touch", up)
+    lArrow:addEventListener("touch", left)
 end
 
 local function RemoveArrowEventListeners()
     rArrow:removeEventListener("touch", right)
     uArrow:removeEventListener("touch", up)
+    lArrow:removeEventListener("touch", left)
 end
 
 local function AddRuntimeListeners()
@@ -152,11 +164,13 @@ end
 local function MakeSoccerBallsVisible()
     ball1.isVisible = true
     ball2.isVisible = true
+    ball3.isVisible = true
 end
 
 local function MakeHeartsVisible()
     heart1.isVisible = true
     heart2.isVisible = true
+    heart3.isVisible = true
 end
 
 local function YouLoseTransition()
@@ -192,22 +206,30 @@ local function onCollision( self, event )
             -- decrease number of lives
             numLives = numLives - 1
 
-            if (numLives == 1) then
+            if (numLives == 2) then
+                --update hearts
+                heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = false
+            elseif (numLives == 1) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = false
+                heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter) 
 
             elseif (numLives == 0) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
+                heart3.isVisible = false
                 timer.performWithDelay(200, YouLoseTransition)
             end
         end
 
         if  (event.target.myName == "ball1") or
-            (event.target.myName == "ball2") then
+            (event.target.myName == "ball2") or
+            (event.target.myName == "ball3") then
 
             -- get the ball that the user hit
             theBall = event.target
@@ -250,7 +272,8 @@ local function AddCollisionListeners()
     ball1:addEventListener( "collision" )
     ball2.collision = onCollision
     ball2:addEventListener( "collision" )
-
+    ball3.collision = onCollision
+    ball3:addEventListener( "collision" )
     door.collision = onCollision
     door:addEventListener( "collision" )
 end
@@ -262,6 +285,7 @@ local function RemoveCollisionListeners()
 
     ball1:removeEventListener( "collision" )
     ball2:removeEventListener( "collision" )
+    ball3:removeEventListener( "collision" )
 
     door:removeEventListener( "collision")
 
@@ -282,12 +306,14 @@ local function AddPhysicsBodies()
     physics.addBody( spikes2platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( spikes3platform, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
+    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
 
     physics.addBody(ball1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(ball2, "static",  {density=0, friction=0, bounce=0} )
+    physics.addBody(ball3, "static",  {density=0, friction=0, bounce=0} )
 
     physics.addBody(door, "static", {density=1, friction=0.3, bounce=0.2})
 
@@ -307,6 +333,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(spikes2platform)
     physics.removeBody(spikes3platform)
 
+    physics.removeBody(rightW)
     physics.removeBody(leftW)
     physics.removeBody(topW)
     physics.removeBody(floor)
@@ -447,6 +474,14 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( heart2 )
 
+    heart3 = display.newImageRect("Images/heart.png", 80, 80)
+    heart3.x = 210
+    heart3.y = 50
+    heart3.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart3 )
+    
     --Insert the right arrow
     rArrow = display.newImageRect("Images/RightArrowUnpressed.png", 100, 50)
     rArrow.x = display.contentWidth * 9.2 / 10
@@ -454,6 +489,14 @@ function scene:create( event )
    
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( rArrow)
+
+  --Insert the right arrow
+    lArrow = display.newImageRect("Images/LeftArrowUnpressed.png", 100, 50)
+    lArrow.x = display.contentWidth * 7.2 / 10
+    lArrow.y = display.contentHeight * 9.5 / 10
+   
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( lArrow)
 
     --Insert the left arrow
     uArrow = display.newImageRect("Images/UpArrowUnpressed.png", 50, 100)
@@ -470,8 +513,10 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( leftW )
 
+
+
     rightW = display.newLine( 0, 0, 0, display.contentHeight)
-    rightW.x = display.contentCenterX * 2
+    rightW.x = display.contentWidth
     rightW.isVisible = true
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -508,6 +553,15 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( ball2 )
 
+
+ --ball3
+    ball3 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
+    ball3.x = 490
+    ball3.y = 170
+    ball3.myName = "ball2"
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( ball2 )
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
