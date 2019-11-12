@@ -61,9 +61,9 @@ local rArrow
 local uArrow
 
 local motionx = 0
-local SPEED = 5
+local SPEED = 7
 local LINEAR_VELOCITY = -100
-local GRAVITY = 7
+local GRAVITY = 9
 
 local leftW 
 local rightW
@@ -206,11 +206,18 @@ local function onCollision( self, event )
             -- decrease number of lives
             numLives = numLives - 1
 
-            if (numLives == 2) then
+            if (numLives == 3) then
+                 heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = true
+                 timer.performWithDelay(200, ReplaceCharacter) 
+            elseif
+                (numLives == 2) then
                 --update hearts
                 heart1.isVisible = true
                 heart2.isVisible = true
                 heart3.isVisible = false
+                 timer.performWithDelay(200, ReplaceCharacter) 
             elseif (numLives == 1) then
                 -- update hearts
                 heart1.isVisible = true
@@ -558,10 +565,10 @@ function scene:create( event )
     ball3 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
     ball3.x = 490
     ball3.y = 170
-    ball3.myName = "ball2"
+    ball3.myName = "ball3"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( ball2 )
+    sceneGroup:insert( ball3 )
 end --function scene:create( event )
 
 -----------------------------------------------------------------------------------------
