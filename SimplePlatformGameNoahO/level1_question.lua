@@ -43,7 +43,7 @@ local wrongAnswer1
 local wrongAnswer2
 local wrongAnswer3
 
-local answerText 
+local answerText1 
 local wrongAnswerText1
 local wrongAnswerText2
 local wrongAnswerText3
@@ -60,6 +60,8 @@ local Y2 = display.contentHeight*5.5/7
 local userAnswer
 local textTouched = false
 
+
+
 -----------------------------------------------------------------------------------------
 --LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -74,7 +76,7 @@ end
 -----------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
-    userAnswer = answerText.text
+    userAnswer = answerText1.text
     
     if (touch.phase == "ended") then
 
@@ -117,8 +119,8 @@ local function TouchListenerWrongAnswer3(touch)
     end 
 end
 --adding the event listeners 
-local function AddTextListeners ( )
-    answerText:addEventListener( "touch", TouchListenerAnswer)
+local function AddTextListeners ()
+    answerText1:addEventListener( "touch", TouchListenerAnswer )
     wrongText1:addEventListener( "touch", TouchListenerWrongAnswer)
     wrongText2:addEventListener( "touch", TouchListenerWrongAnswer2)
     wrongText3:addEventListener( "touch", TouchListenerWrongAnswer3)
@@ -126,7 +128,7 @@ end
 
 --removing the event listeners
 local function RemoveTextListeners()
-    answerText:removeEventListener( "touch", TouchListenerAnswer)
+    answerText1:removeEventListener( "touch", TouchListenerAnswer)
     wrongText1:removeEventListener( "touch", TouchListenerWrongAnswer)
     wrongText2:removeEventListener( "touch", TouchListenerWrongAnswer2)
     wrongText3:removeEventListener( "touch", TouchListenerWrongAnswer3)
@@ -150,7 +152,7 @@ local function DisplayQuestion()
     questionText.text = firstNumber .. " + " .. secondNumber .. " ="
 
     --creating answer text from list it corispondes with the animals list
-    answerText.text = answer
+    answerText1.text = answer
     
     --creating wrong answers
     wrongText1.text = wrongAnswer1
@@ -165,8 +167,8 @@ local function PositionAnswers()
 
     if (answerPosition == 1) then
 
-        answerText.x = X1
-        answerText.y = Y1
+        answerText1.x = X1
+        answerText1.y = Y1
         
         wrongText1.x = X2
         wrongText1.y = Y1
@@ -180,8 +182,8 @@ local function PositionAnswers()
         
     elseif (answerPosition == 2) then
 
-        answerText.x = X1
-        answerText.y = Y2
+        answerText1.x = X1
+        answerText1.y = Y2
             
         wrongText1.x = X1
         wrongText1.y = Y1
@@ -195,8 +197,8 @@ local function PositionAnswers()
 
     elseif (answerPosition == 3) then
 
-        answerText.x = X2
-        answerText.y = Y1
+        answerText1.x = X2
+        answerText1.y = Y1
             
         wrongText1.x = X1
         wrongText1.y = Y2
@@ -236,8 +238,8 @@ function scene:create( event )
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 75)
 
     -- create the answer text object & wrong answer text objects
-    answerText = display.newText("", X1, Y2, Arial, 75)
-    answerText.anchorX = 0
+    answerText1 = display.newText("", X1, Y2, Arial, 75)
+    answerText1.anchorX = 0
     wrongText1 = display.newText("", X2, Y2, Arial, 75)
     wrongText1.anchorX = 0
     wrongText2 = display.newText("", X1, Y1, Arial, 75)
@@ -251,7 +253,7 @@ function scene:create( event )
     sceneGroup:insert(bkg)
     sceneGroup:insert(cover)
     sceneGroup:insert(questionText)
-    sceneGroup:insert(answerText)
+    sceneGroup:insert(answerText1)
     sceneGroup:insert(wrongText1)
     sceneGroup:insert(wrongText2)
     sceneGroup:insert(wrongText3)

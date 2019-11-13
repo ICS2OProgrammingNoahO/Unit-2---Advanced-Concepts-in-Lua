@@ -53,8 +53,7 @@ local character
 
 local heart1
 local heart2
-local heart3
-local numLives = 3
+local numLives = 2
 
 local lArrow 
 local rArrow 
@@ -76,6 +75,9 @@ local ball3
 local theBall
 
 local questionsAnswered = 0
+
+local channel1
+local spikeSound = audio.loadSound("Sounds/BoingSoundEffect.mp3")
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -170,7 +172,6 @@ end
 local function MakeHeartsVisible()
     heart1.isVisible = true
     heart2.isVisible = true
-    heart3.isVisible = true
 end
 
 local function YouLoseTransition()
@@ -194,7 +195,7 @@ local function onCollision( self, event )
             (event.target.myName == "spikes2") or
             (event.target.myName == "spikes3") then
 
-            -- add sound effect here
+            channel1 = audio.play(spikeSound)
 
             -- remove runtime listeners that move the character
             RemoveArrowEventListeners()
@@ -206,30 +207,24 @@ local function onCollision( self, event )
             -- decrease number of lives
             numLives = numLives - 1
 
-            if (numLives == 3) then
-                 heart1.isVisible = true
-                heart2.isVisible = true
-                heart3.isVisible = true
-                 timer.performWithDelay(200, ReplaceCharacter) 
-            elseif
-                (numLives == 2) then
+            if (numLives == 2) then
                 --update hearts
                 heart1.isVisible = true
                 heart2.isVisible = true
-                heart3.isVisible = false
+                
                  timer.performWithDelay(200, ReplaceCharacter) 
             elseif (numLives == 1) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = false
-                heart3.isVisible = false
+                
                 timer.performWithDelay(200, ReplaceCharacter) 
 
             elseif (numLives == 0) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
-                heart3.isVisible = false
+                
                 timer.performWithDelay(200, YouLoseTransition)
             end
         end
@@ -258,6 +253,7 @@ local function onCollision( self, event )
             --check to see if the user has answered 5 questions
             if (questionsAnswered == 3) then
                 -- after getting 3 questions right, go to the you win screen
+                composer.gotoScene("you_win")
             end
         end        
 
@@ -481,13 +477,7 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( heart2 )
 
-    heart3 = display.newImageRect("Images/heart.png", 80, 80)
-    heart3.x = 210
-    heart3.y = 50
-    heart3.isVisible = true
-
-    -- Insert objects into the scene group in order to ONLY be associated with this scene
-    sceneGroup:insert( heart3 )
+  
     
     --Insert the right arrow
     rArrow = display.newImageRect("Images/RightArrowUnpressed.png", 100, 50)
@@ -563,8 +553,8 @@ function scene:create( event )
 
  --ball3
     ball3 = display.newImageRect ("Images/SoccerBall.png", 70, 70)
-    ball3.x = 490
-    ball3.y = 170
+    ball3.x = 950
+    ball3.y = 140
     ball3.myName = "ball3"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
