@@ -1,7 +1,9 @@
------------------------------------------------------------------------------------------
 --
--- SceneTemplate.lua
--- Scene Template (Composer API)
+-- you_lose.lua
+-- Created by: Ms Raffin
+--edited by Noah
+-- Date: Nov. 10, 2019
+-- Description: This is the lose screen
 --
 -----------------------------------------------------------------------------------------
 
