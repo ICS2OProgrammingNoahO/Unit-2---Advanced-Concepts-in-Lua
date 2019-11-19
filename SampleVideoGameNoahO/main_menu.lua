@@ -32,7 +32,7 @@ local scene = composer.newScene( sceneName )
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
-local bkg_image
+local background
 local playButton
 local creditsButton
 local instructionsButton
@@ -45,26 +45,24 @@ local music = audio.loadStream("Sounds/bensound-hipjazz.mp3")
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition Function to Credits Page
-local function InstructionsTransition( )       
-    composer.gotoScene( "instructions", {effect = "zoomOutIn", time = 500})
-     audio.stop()
-end 
+--local function InstructionsTransition( )       
+ --   composer.gotoScene( "instructions", {effect = "zoomOutIn", time = 500})
+--end 
 
 -----------------------------------------------------------------------------------------
 
 -- Creating Transition to Level1 Screen
-local function Level1ScreenTransition( )
-    composer.gotoScene( "level1_screen", {effect = "zoomOutInRotate", time = 1000})
-    audio.stop()
-end    
-
+--local function Level1ScreenTransition( )
+  --  composer.gotoScene( "level1_screen", {effect = "zoomOutInRotate", time = 1000})
+  --  audio.stop()
+--
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
 
 -- Creating Transition Function to Instructions Page
-local function CreditsTransition( )       
-    composer.gotoScene( "credits_screen", {effect = "slideUp", time = 500})
-    audio.stop()
-end 
+--local function CreditsTransition( )       
+  --  composer.gotoScene( "credits_screen", {effect = "slideUp", time = 500})
+  --  audio.stop()
+--end 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -83,18 +81,18 @@ function scene:create( event )
     border:setFillColor(144/255, 254/255, 243/255)
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/main_menu.png")
-    bkg_image.x = display.contentCenterX
-    bkg_image.y = display.contentCenterY + 200
-    bkg_image.width = display.contentWidth
-    bkg_image.height = display.contentHeight
+   background = display.newRect(100, 100)
+   background.x = display.contentCenterX
+   background.y = display.contentCenterY + 200
+   background.width = display.contentWidth
+   background.height = display.contentHeight
 
 
     -- Associating display objects with this scene 
-    sceneGroup:insert( bkg_image )
+    sceneGroup:insert( background )
     sceneGroup:insert( border )
     -- Send the background image to the back layer so all other objects can be on top
-    bkg_image:toBack()
+    background:toBack()
     border:toBack()
 
     -----------------------------------------------------------------------------------------
