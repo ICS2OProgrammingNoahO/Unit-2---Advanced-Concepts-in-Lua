@@ -75,8 +75,13 @@ local alternateAnswerBox3PreviousX
 local userAnswerBoxPlaceholder
 
 -- sound effects
-local correctSound
-local booSound
+local correctSound = audio.loadSound("Sounds/Correct.wav")
+local booSound = audio.loadSound("Sounds/boo.mp3")
+local backgroundMusic = audio.loadStream("Sounds/music.mp3")
+local channel1
+local channel2
+local channel3
+
 
 -- counts number of correct and incorrect answers
 local numCorrect = 0
@@ -229,12 +234,16 @@ end
 -- Function to Check User Input
 local function CheckUserAnswerInput()
           if ( userAnswer == correctAnswer)then
+            channel1 = audio.play(correctSound)
             numCorrect = numCorrect + 1
+           
     timer.performWithDelay(1600, RestartLevel1) 
           elseif ( userAnswer == alternateAnswer1) or
                  ( userAnswer == alternateAnswer2) or
                  ( userAnswer == alternateAnswer3) then
+                    channel2 = audio.play(booSound)
                     numIncorrect = numIncorrect + 1
+                   
     timer.performWithDelay(1600, RestartLevel1) 
 end
 
@@ -521,7 +530,7 @@ function scene:show( event )
         -- Called when the scene is still off screen (but is about to come on screen).    
 
     elseif ( phase == "did" ) then
-
+       channel3 = audio.play(backgroundMusic, {loop = -1})
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
